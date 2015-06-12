@@ -1,50 +1,53 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>ArcherScript</title>
-<<<<<<< HEAD
-<script src="/core/js/jquery.js"></script>
-=======
-<script src="/core/js/jqueryace/jquery/jquery-1.8.3.min.js"></script>
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
+<?php
+require_once $_SERVER["DOCUMENT_ROOT"]."/includes/View.php";
+
+require_once $_SERVER["DOCUMENT_ROOT"]."/includes/jQueryManager.php";
+use ArcherSys\Viewer\Contrib\View;
+use ArcherSys\Viewer\jQueryManager;
+use ArcherSys\Viewer\TabsDefinition;
+$archerscript = new View("ArcherScript",function(){
+
+?>
+
+<script src="/core/jquery-ui-1.11.3.custom/external/jquery/jquery.js"></script>
+
+<?php
+
+jQueryManager::addjQueryUI();
+jQueryManager::addjQueryUICSS("main");
+jQueryManager::addjQueryUICSS("structure");
+
+jQueryManager::addjQueryUICSS("theme");
+
+
+?>
 <script src="/core/asosblockly/blockly_compressed.js"></script>
 <script src="/core/asosblockly/blocks_compressed.js"></script>
 
 <script src="/core/asosblockly/php_compressed.js"></script>
 <script src="/core/asosblockly/msg/js/en.js"></script>
-<<<<<<< HEAD
-</head>
-<body>
-<div id="blocklyDiv" style="height: 480px; width: 800px;"></div>
-=======
 
 <script src="/developer/ace-builds/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
 
-
-
 <style>
-    #editor{
+    div[id^=editor]{
         width: 800px;
         height: 200px;
     }
 </style>
-</head>
-<body>
-   
+<?php
+},function(){
 
-<div id="blocklyDiv" style="height: 480px; width: 800px;"></div>
-<div id="editor"></div>
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
-<xml id="toolbox" style="display: none">
+?><div id='blocklyDiv' style='height: 480px; width: 1000px;'></div>
+<div id='editorPHP'></div>
+
+
+<xml id="toolboxPHP" style="display: none">
 <category id="catControl">
     <block type="controls_if"></block>
     <block type="controls_whileUntil"></block>
 </category>
-<<<<<<< HEAD
-  <category id="catLogic">
-=======
   <category name="Logic" id="catLogic">
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
       <block type="logic_negate"></block>
@@ -52,41 +55,48 @@
       <block type="logic_null"></block>
       <block type="logic_ternary"></block>
 </category>
-<category id="catMath">
+<category id="catOOP" name="Object Oriented Programming">
+  <block type="class"></block>
+
+  <block type="member"></block>
+  <block type="private_method"></block>
+  <block type="method"></block>
+</category>
+<category id="catMath" name="Math">
   <block type="math_number"></block>
   <block type="math_arithmetic"></block>
 </category>
-<category id="catText">
+<category id="catText" name="String">
   <block type="text"></block>
-  <block type="text_print"></block>
-</category>
-<category id="catArcherSys">
+</category>    <category name="Variables" custom="VARIABLE"></category>
+<category id="catProcedures" name="Procedures" custom="PROCEDURE"></category>
+
+<category id="catArcherSys" name="ArcherSys OS">
    
+  <block type="declarephp"></block>
   <block type="addjquery"></block>
+  <block type="addh1"></block>
   <block type="defineview"></block>
-<<<<<<< HEAD
-=======
+  <category id="catArcherSysCode" name="Code Imports">
   <block type="import"></block>
   
   <block type="use"></block>
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
+</category>
 </category>
 
-<category id="catVariables">
-  <block type="variables_set"></block>
-  <block type="variables_get"></block>
-</category>
 
 </xml>
-<<<<<<< HEAD
-<form name="coder">
-<textarea name="code"></textarea>
-</form>
-=======
+<xml id="toolboxJS" style="display: none">
 
 
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
-<script>
+
+</xml>
+
+
+<script type="text/javascript" src="script.js"></script>
+<script src="http://localhost/storage.js"></script>
+<script type="text/javascript">
+$(function(){
 Blockly.Blocks['defineview'] = {
   init: function() {
     this.appendDummyInput()
@@ -99,11 +109,8 @@ Blockly.Blocks['defineview'] = {
         .appendField("Content");
     this.setColour(20);
     this.setTooltip('');
-<<<<<<< HEAD
-=======
     this.setNextStatement(true);
     this.setPreviousStatement(true);
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
     this.setHelpUrl('http://www.example.com/');
   }
 };
@@ -112,20 +119,12 @@ Blockly.Blocks['addjquery'] = {
     this.appendDummyInput()
         .appendField("jQueryManager::addjQuery");
     this.setPreviousStatement(true);
-<<<<<<< HEAD
-=======
     this.setNextStatement(true);
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
     this.setColour(120);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
 };
-<<<<<<< HEAD
-Blockly.PHP['addjquery'] = function(block) {
-  // TODO: Assemble PHP into code variable.
-  var code = 'jQueryManager::addjQuery();';
-=======
 Blockly.Blocks['import'] = {
   init: function() {
     this.appendDummyInput()
@@ -136,10 +135,23 @@ Blockly.Blocks['import'] = {
     this.setColour(330);
     this.setTooltip('');
     this.setNextStatement(true);
+    this.setPreviousStatement(true);
     this.setHelpUrl('http://www.example.com/');
   }
 };
 
+
+Blockly.Blocks['declarephp'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("<?php");
+    this.appendStatementInput("code")
+        .appendField("Code");
+    this.setColour(120);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
 Blockly.Blocks['use'] = {
   init: function() {
     this.appendDummyInput()
@@ -147,7 +159,7 @@ Blockly.Blocks['use'] = {
     this.appendValueInput("object")
         .setCheck("String")
         .appendField("Object")
-        .appendField(new Blockly.FieldTextInput("ArcherSys/Viewer/Contrib/"), "Object");
+        .appendField(new Blockly.FieldTextInput("ArcherSys\\Viewer\\Contrib\\"), "Object");
     this.setPreviousStatement(true);
     this.setColour(65);
     this.setTooltip('');
@@ -166,13 +178,12 @@ Blockly.PHP['import'] = function(block) {
   var value_codefile = Blockly.PHP.valueToCode(block, 'codefile', Blockly.PHP.ORDER_ATOMIC);
   var text_codefile = block.getFieldValue('codefile');
   // TODO: Assemble JavaScript into code variable.
-  var code = 'require_once $_SERVER["DOCUMENT_ROOT"]."/includes/'+ text_codefile+';';
+  var code = '\nrequire_once $_SERVER["DOCUMENT_ROOT"]."/includes/'+ text_codefile+'";';
   return code;
 };
 Blockly.PHP['addjquery'] = function(block) {
   // TODO: Assemble PHP into code variable.
   var code = '\njQueryManager::addjQuery();';
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
   return code;
 };
 Blockly.PHP['defineview'] = function(block) {
@@ -180,62 +191,157 @@ Blockly.PHP['defineview'] = function(block) {
   var statements_head = Blockly.PHP.statementToCode(block, 'head');
   var statements_body = Blockly.PHP.statementToCode(block, 'body');
   // TODO: Assemble PHP into code variable.
-<<<<<<< HEAD
-  var code = '$view = new View(' + value_title + ',function(){'+ statements_head + '\n},function(){'+'});	';
-=======
-  var code = '$view = new View(' + value_title + ',function(){\n'+ statements_head + '\n},function(){'+'});	';
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
+  var code = '\n$view = new View("' + value_title + '",function(){\n'+ statements_head + '\n},function(){'+statements_body + '});	';
+  return code;
+};
+Blockly.PHP['declarephp'] = function(block) {
+  var statements_code = Blockly.PHP.statementToCode(block, 'code');
+  // TODO: Assemble PHP into code variable.
+  var code = PHP + " \n" + statements_code + ' \n?> ';
   return code;
 };
 Blockly.Blocks['addh1'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("HeadersManager::addH1");
-    this.appendValueInput("NAME")
+        .appendField("HeaderManager::addH1");
+    this.appendValueInput("text")
         .setCheck("String")
-        .appendField(new Blockly.FieldTextInput("HeaderText"), "heading");
+        .appendField("Text");
+    this.setInputsInline(true);
     this.setPreviousStatement(true);
+    this.setNextStatement(true);
     this.setColour(65);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
 };
-Blockly.PHP['addh1'] = function(block) {
-  var value_name = Blockly.PHP.valueToCode(block, 'NAME', Blockly.PHP.ORDER_ATOMIC);
-  var text_heading = block.getFieldValue('heading');
+Blockly.PHP['class'] = function(block) {
+  var statements_code = Blockly.PHP.statementToCode(block, 'code');
+  var text_class_name = block.getFieldValue('class_name');
+ 
   // TODO: Assemble PHP into code variable.
-<<<<<<< HEAD
-  var code = 'HeaderManager::addH1('+text_heading +');';
-=======
-  var code = '\nHeaderManager::addH1('+text_heading +');';
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
+  var code = 'class ' + text_class_name + ' {\n' + statements_code + '\n }  ';
+  return code;
+};
+Blockly.PHP['method'] = function(block) {
+  var text_function_name = block.getFieldValue('function_name');
+  var text_param1 = block.getFieldValue('param1');
+  var text_param2 = block.getFieldValue('param2');
+  var statements_function_body = Blockly.PHP.statementToCode(block, 'function_body');
+  // TODO: Assemble PHP into code variable.
+  var code = 'public function ' + text_function_name + '(' + text_param1 + '){\n' + statements_function_body + ' \n}';
+ 
+  return code;
+};
+Blockly.Blocks['private_method'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("private function")
+        .appendField(new Blockly.FieldTextInput("default"), "method_name")
+        .appendField("(")
+        .appendField(new Blockly.FieldTextInput("$foo"), "param1")
+        .appendField(",")
+        .appendField(new Blockly.FieldTextInput("$bar"), "param2")
+        .appendField("){");
+    this.appendStatementInput("method_name");
+
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.appendDummyInput()
+        .appendField("}");
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['private_method'] = function(block) {
+  var statements_method_name = Blockly.PHP.statementToCode(block, 'method_name');
+  var text_method_name = block.getFieldValue('method_name');
+  var text_param1 = block.getFieldValue('param1');
+  var text_param2 = block.getFieldValue('param2');
+  // TODO: Assemble PHP into code variable.
+  var code = 'private function ' + text_method_name + '(' + text_param1 + ',' + text_param2 + '){\n' + statements_method_name + '\n}';
+  return code;
+};
+Blockly.Blocks['member'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("public ")
+        .appendField(new Blockly.FieldTextInput("$variable"), "var");
+    this.setPreviousStatement(true, "object");
+    this.setNextStatement(true);
+    this.setColour(160);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['member'] = function(block) {
+  var text_var = block.getFieldValue('var');
+  // TODO: Assemble PHP into code variable.
+  var code = 'public '+text_var + ";\n";
   return code;
 };
 
-
-<<<<<<< HEAD
-
+Blockly.Blocks['method'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("public function")
+        .appendField(new Blockly.FieldTextInput("default"), "function_name")
+        .appendField("(")
+        .appendField(new Blockly.FieldTextInput("$foo"), "param1")
+        .appendField(",")
+        .appendField(new Blockly.FieldTextInput("$bar"), "param2")
+        .appendField("){");
+    this.appendStatementInput("function_body");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(120);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.Blocks['class'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("class")
+        .appendField(new Blockly.FieldTextInput("default"), "class_name");
+    this.appendDummyInput()
+        .appendField("{");
+    this.appendStatementInput("code")
+        .setCheck("object");
+    this.appendDummyInput()
+        .appendField("}");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(210);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['addh1'] = function(block) {
+  var value_name = Blockly.PHP.valueToCode(block, 'h1', Blockly.PHP.ORDER_ATOMIC);
+  var value_text = block.getFieldValue('text');
+  // TODO: Assemble PHP into code variable.
+  var code = '\nHeaderManager::addH1('+value_text +');';
+  return code;
+};
   var workspace = Blockly.inject('blocklyDiv',
-      {toolbox: window.document.getElementById('toolbox')});
-
+      {toolbox: window.document.getElementById('toolboxPHP')});
+var editor = ace.edit('editorPHP');
 workspace.addChangeListener(function(){
 var code = Blockly.PHP.workspaceToCode(workspace);
-window.document.getElementsByTagName("textarea")[0].value = code;
-=======
-  var workspace = Blockly.inject('blocklyDiv',
-      {toolbox: window.document.getElementById('toolbox')});
-var editor = ace.edit("editor");
-workspace.addChangeListener(function(){
-var code = Blockly.PHP.workspaceToCode(workspace);
 
 
-var textarea = $('textarea[name="editor"]').hide();
+
+var textarea = $('textarea[name=editorPHP]').hide();
 editor.getSession().setValue(code);
 editor.getSession().on('change', function(){
   textarea.val(editor.getSession().getValue());
+  
 });
->>>>>>> 85a7c0299e5c8e2da098b3378f20436781c34327
+});
 });
 </script>
-</body>
-</html>
+<textarea name='editorPHP'></textarea>
+<?php
+});
+?>
