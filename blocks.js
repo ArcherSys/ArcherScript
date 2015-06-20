@@ -16,6 +16,28 @@ Blockly.Blocks['defineview'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+Blockly.Blocks['formentry'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("new Form(")
+        .appendField(new Blockly.FieldTextInput("https://www.google.com/search"), "action ")
+        .appendField(new Blockly.FieldTextInput("GET"), "method")
+        .appendField(new Blockly.FieldTextInput("Save"), "submit")
+        .appendField(");");
+    this.setOutput(true, "object");
+    this.setColour(20);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['formentry'] = function(block) {
+  var text_action_ = block.getFieldValue('action ');
+  var text_method = block.getFieldValue('method');
+  var text_submit = block.getFieldValue('submit');
+  // TODO: Assemble PHP into code variable.
+  var code = ' new Form("' + text_action + '","' + text_method + '","' + text_submit + '")';
+  return code;
+};
 
 Blockly.Blocks['addjquery'] = {
   init: function() {
@@ -27,6 +49,50 @@ Blockly.Blocks['addjquery'] = {
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
+};
+Blockly.Blocks['abstractmethod'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("abstract function")
+        .appendField(new Blockly.FieldTextInput("default"), "method_name")
+        .appendField("(")
+        .appendField(new Blockly.FieldTextInput("default"), "param1")
+        .appendField(",")
+        .appendField(new Blockly.FieldTextInput("default"), "param2")
+        .appendField(")")
+        .appendField(";");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(210);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['abstractmethod'] = function(block) {
+  var text_method_name = block.getFieldValue('method_name');
+  var text_param1 = block.getFieldValue('param1');
+  var text_param2 = block.getFieldValue('param2');
+  // TODO: Assemble PHP into code variable.
+  var code = 'abstract method ' + text_method_name + '(' + text_param1 + ',' + text_param2 + ');';
+  return code;
+};
+Blockly.Blocks['definecallable'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("public  callable ")
+        .appendField(new Blockly.FieldTextInput("default"), "callable name");
+    this.setPreviousStatement(true, "object");
+    this.setNextStatement(true);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['definecallable'] = function(block) {
+  var text_callable_name = block.getFieldValue('callable name');
+  // TODO: Assemble PHP into code variable.
+  var code = 'public callable $'+ text_callable_name+';';
+  return code;
 };
 Blockly.Blocks['import'] = {
   init: function() {
@@ -69,6 +135,35 @@ Blockly.Blocks['use'] = {
     this.setNextStatement(true);
     this.setHelpUrl('http://www.example.com/');
   }
+};
+Blockly.Blocks['addimage'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("new Image(");
+    this.appendValueInput("src")
+        .setCheck("String")
+        .appendField("Source");
+    this.appendValueInput("alt")
+        .setCheck("String")
+        .appendField("Alt");
+    this.appendValueInput("id")
+        .setCheck("String")
+        .appendField("IDt");
+    this.appendDummyInput()
+        .appendField(");");
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+Blockly.PHP['addimage'] = function(block) {
+  var value_src = Blockly.PHP.valueToCode(block, 'src', Blockly.PHP.ORDER_ATOMIC);
+  var value_alt = Blockly.PHP.valueToCode(block, 'alt', Blockly.PHP.ORDER_ATOMIC);
+  var value_id = Blockly.PHP.valueToCode(block, 'id', Blockly.PHP.ORDER_ATOMIC);
+  // TODO: Assemble PHP into code variable.
+  var code = 'new Image("' + value_src + '","'+value_alt+'","'+value_id+'");';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.PHP.ORDER_NONE];
 };
 Blockly.PHP['use'] = function(block) {
   var value_object = Blockly.PHP.valueToCode(block, 'object', Blockly.PHP.ORDER_ATOMIC);
